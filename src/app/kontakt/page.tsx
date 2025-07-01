@@ -9,7 +9,7 @@ export default function KontaktPage() {
                 <div className="flex flex-col items-center space-y-2">
                     <MapPin className="h-10 w-10 mb-3 text-primary" />
                     <h3 className="font-semibold text-xl">Naša adresa</h3>
-                    <p className="text-muted-foreground">Vysokoškolákov 3053/20</p>
+                    <p className="text-muted-foreground">Zbor Cirkvi adventistov siedmeho dňa</p>
                     <p className="text-muted-foreground">Štúrova 9, 010 01 Žilina</p>
                 </div>
                 <div className="flex flex-col items-center space-y-2">

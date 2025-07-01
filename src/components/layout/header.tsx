@@ -12,7 +12,7 @@ const navLinks = [
   { href: '/zamyslenia', label: 'Zamyslenia' },
   { href: '/spolocenstvo', label: 'Spoločenstvo' },
   { href: '/kontakt', label: 'Kontakt' },
-  { href: '/kalendar', label: 'kalendar' },
+  { href: '/kalendar', label: 'Kalendár' },
 ];
 
 export default function Header() {

@@ -1,4 +1,4 @@
-# CASD
+# CASD do not
 
 This is a NextJS starter in Firebase Studio.
 

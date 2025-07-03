@@ -1,28 +1,68 @@
-'use client';
+"use client";
+import { useState } from "react";
 
-import { useEffect, useState } from 'react';
+export default function CalendarPage() {
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [result, setResult] = useState<string | null>(null);
 
-export default function KalendarPage() {
-  const [events, setEvents] = useState<any[]>([]);
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setResult(null);
 
-  useEffect(() => {
-    fetch('/api/events')
-      .then((res) => res.json())
-      .then(setEvents);
-  }, []);
+    const res = await fetch("/api/kalendar/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, date, description }),
+    });
+
+    const data = await res.json();
+    if (data.url) {
+      setResult("Udalosť bola uložená! URL: " + data.url);
+      setTitle("");
+      setDate("");
+      setDescription("");
+    } else {
+      setResult("Chyba: " + (data.error || "Neznáma chyba"));
+    }
+  }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl md:text-5xl font-bold font-headline mb-12">Kalendár</h1>
-      <ul>
-        {events.map((event, idx) => (
-          <li key={idx} className="mb-4">
-            <div className="font-semibold">{event.title}</div>
-            <div className="text-muted-foreground">{event.date}</div>
-            <div>{event.description}</div>
-          </li>
-        ))}
-      </ul>
+    <div style={{ maxWidth: 400, margin: "2rem auto" }}>
+      <h2>Pridať udalosť do kalendára</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Názov udalosti:</label>
+          <input
+            type="text"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            required
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div>
+          <label>Dátum:</label>
+          <input
+            type="date"
+            value={date}
+            onChange={e => setDate(e.target.value)}
+            required
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div>
+          <label>Popis:</label>
+          <textarea
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+        <button type="submit" style={{ marginTop: 10 }}>Uložiť udalosť</button>
+      </form>
+      {result && <p>{result}</p>}
     </div>
   );
 }
